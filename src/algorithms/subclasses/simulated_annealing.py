@@ -60,9 +60,11 @@ class SimulatedAnnealing(Algorithm):
     def __init__(self, 
                  context: SimulatedAnnealingContext):
 
-        # Initialize context including solutions and values
-        self.initialize(context)
+        # Initialize the context, solutions, and values
+        self.initialize(context) 
 
+        # Initialize temperature
+        self.current_temperature = self.context.temperature_schedule[self.context.temperature_index]   
 
     def run(self):
         """

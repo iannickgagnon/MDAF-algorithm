@@ -85,12 +85,11 @@ class Algorithm(ABC):
         self.current_value = self.objective_function(self.initial_solution)
         self.best_solution = self.initial_solution
         self.best_value = self.objective_function(self.initial_solution)
-        self.current_temperature = self.temperature_schedule[self.temperature_index]
 
     def initialize(self, context):
 
         # Store the context
-        super().__init__(context)
+        Algorithm.__init__(self, context)
 
         # Initialize the solutions and values
         self.initialize_solutions_and_values()

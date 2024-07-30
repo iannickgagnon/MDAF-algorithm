@@ -1,8 +1,6 @@
 
 # External libraries
-from random import randint, \
-                   choice, \
-                   random, \
+from random import random, \
                    gauss
 from math import exp
 
@@ -58,7 +56,8 @@ if __name__ == "__main__":
         """
         if context.temperature_index < len(context.temperature_schedule) - 1:
             context.temperature_index += 1
-            context.current_temperature = context.temperature_schedule[context.temperature_index]
+            context.current_temperature = \
+                context.temperature_schedule[context.temperature_index]
 
 
     # Initialize context
