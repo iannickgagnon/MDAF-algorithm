@@ -72,8 +72,7 @@ class SimulatedAnnealing(Algorithm):
         self.current_temperature = context.temperature_schedule[context.temperature_index]
 
 
-    def run(self, 
-            objective_function: callable):
+    def run(self):
         """
         Run the Simulated Annealing algorithm.
 
@@ -83,9 +82,6 @@ class SimulatedAnnealing(Algorithm):
         Returns:
             tuple[np.ndarray, float]: The best solution found by the algorithm and its value.
         """
-
-        # Store the objective function
-        self.objective_function = objective_function
 
         # Main loop
         while not self.terminate():

@@ -24,7 +24,8 @@ class Algorithm(ABC):
         self.context = context
 
     def __getattr__(self, 
-                    attribute_name: str) -> AbstractContext:
+                    attribute_name: str,
+                    *args) -> AbstractContext:
         """
         Retrieves the attribute from the context object.
 
@@ -42,8 +43,8 @@ class Algorithm(ABC):
             # If it is callable and has only one parameter named 'context', return wrapper with context injected
             if callable(attribute):  
                 parameters = list(signature(attribute).parameters.values())
-                if len(parameters) == 1 and parameters[0].name == 'context':
-                    return lambda: attribute(self.context)
+                if parameters[0].name == 'context':
+                    return lambda: attribute(self.context, *args)
 
             # Return the attribute from the context object
             return getattr(self.context, attribute_name)
@@ -63,7 +64,6 @@ class Algorithm(ABC):
             attribute_name (str): The name of the attribute.
             value (Any): The value to be set.
         """
-
 
         if attribute_name == 'context':
             
