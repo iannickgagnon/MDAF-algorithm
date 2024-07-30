@@ -27,8 +27,7 @@ class SimulatedAnnealingContext(AbstractContext):
         terminate (callable): The function used to determine whether to terminate the algorithm.
         lower_temperature (callable): The function used to lower the temperature.
     """
-
-    temperature_schedule: list
+    temperature_schedule: list = None
     temperature_index: int = 0
     current_temperature: int = None
     initial_solution: list = None
@@ -60,16 +59,9 @@ class SimulatedAnnealing(Algorithm):
 
     def __init__(self, 
                  context: SimulatedAnnealingContext):
-        
-        # Store the context
-        super().__init__(context)
 
-        # Initialize the algorithm
-        self.current_solution = context.initial_solution
-        self.current_value = context.objective_function(context.initial_solution)
-        self.best_solution = context.initial_solution
-        self.best_value = context.objective_function(context.initial_solution)
-        self.current_temperature = context.temperature_schedule[context.temperature_index]
+        # Initialize context including solutions and values
+        self.initialize(context)
 
 
     def run(self):

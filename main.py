@@ -63,7 +63,7 @@ if __name__ == "__main__":
 
     # Initialize context
     context = SimulatedAnnealingContext(
-        temperature_schedule=list(range(1000, 0, -1)),
+        temperature_schedule=list(range(1000, 0, -10)),
         initial_solution=10,
         objective_function=objective_function,
         generate_neighbor=generate_neighbor,
