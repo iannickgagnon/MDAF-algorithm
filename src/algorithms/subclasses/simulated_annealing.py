@@ -35,7 +35,7 @@ class SimulatedAnnealingContext(AbstractContext):
     current_value: float = None
     best_solution: list = None
     best_value: float = None
-    objective_function: callable = None
+    objective: callable = None
     generate_neighbor: callable = None
     accept: callable = None
     terminate: callable = None
@@ -71,7 +71,7 @@ class SimulatedAnnealing(Algorithm):
         Run the Simulated Annealing algorithm.
 
         Args:
-            objective_function (callable): The objective function to be optimized.
+            None.
 
         Returns:
             tuple[np.ndarray, float]: The best solution found by the algorithm and its value.
@@ -80,21 +80,21 @@ class SimulatedAnnealing(Algorithm):
         # Main loop
         while not self.terminate():
 
-            # Generate a neighbor solution
+            # Generate neighbor solution
             self.neighbor = self.generate_neighbor()
 
-            # Calculate the value of the neighbor solution
-            self.neighbor_value = self.objective_function(self.neighbor)
+            # Evaluate neighbor solution
+            self.neighbor_value = self.objective(self.neighbor)
 
-            # Probabilistic acceptance of the neighbor
+            # Probabilistic acceptance
             if self.accept():
                 self.current_solution = self.neighbor
                 self.current_value = self.neighbor_value
 
-            # Update the best solution so far
-            if self.objective_function(self.current_solution) < self.objective_function(self.best_solution):
+            # Update the best
+            if self.objective(self.current_solution) < self.objective(self.best_solution):
                 self.best_solution = self.current_solution
                 self.best_value = self.current_value
             
-            # Move to the next temperature
+            # Move along temperature schedule
             self.lower_temperature()

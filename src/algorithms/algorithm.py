@@ -78,15 +78,33 @@ class Algorithm(ABC):
             except AttributeError:
                 setattr(self, attribute_name, value)
 
-    def initialize_solutions_and_values(self):
+    def initialize_solutions_and_values(self) -> None:
+        """
+        Initializes the current and best solutions/values.
+
+        Args:
+            None
+
+        Returns:
+            None
+        """
 
         # Initialize the algorithm
         self.current_solution = self.initial_solution
-        self.current_value = self.objective_function(self.initial_solution)
+        self.current_value = self.objective(self.initial_solution)
         self.best_solution = self.initial_solution
-        self.best_value = self.objective_function(self.initial_solution)
+        self.best_value = self.objective(self.initial_solution)
 
-    def initialize(self, context):
+    def initialize(self, context) -> None:
+        """
+        Initializes the Algorithm object.
+
+        Args:
+            context (AbstractContext): The context object for the algorithm.
+        
+        Returns:
+            None.
+        """
 
         # Store the context
         Algorithm.__init__(self, context)
