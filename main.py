@@ -3,6 +3,7 @@
 from random import random, \
                    gauss
 from math import exp
+import numpy as np
 
 # Internal libraries
 from src.algorithms.subclasses.simulated_annealing import SimulatedAnnealingContext, \
@@ -24,9 +25,12 @@ if __name__ == "__main__":
         """
 
         if context.neighbor_value < context.current_value:
+
             # If the neighbor solution is better, always accept it
             prob = 1.0
+        
         else:
+
             # If the neighbor solution is worse, calculate the acceptance probability
             prob = exp((context.current_value - context.neighbor_value) / context.current_temperature)
 
@@ -71,11 +75,12 @@ if __name__ == "__main__":
         lower_temperature=lower_temperature
     )
 
+
+
     # Instantiate the algorithm
     algo = SimulatedAnnealing(context)
 
-    # Run the algorithm
-    algo.run()
+    #algo.plot_profile(metric=algo.profiles.BEST)
 
-    print("Best solution:", algo.best_solution)
-    print("Best solution value:", algo.best_value)
+    algo.plot_distribution(metric=algo.metrics.BEST, 
+                           foo_statistic=np.mean)

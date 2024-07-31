@@ -89,12 +89,6 @@ class SimulatedAnnealing(Algorithm):
             # Probabilistic acceptance
             if self.accept():
                 self.current_solution = self.neighbor
-                self.current_value = self.neighbor_value
 
-            # Update the best
-            if self.objective(self.current_solution) < self.objective(self.best_solution):
-                self.best_solution = self.current_solution
-                self.best_value = self.current_value
-            
             # Move along temperature schedule
             self.lower_temperature()

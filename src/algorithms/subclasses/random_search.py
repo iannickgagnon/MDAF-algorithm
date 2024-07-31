@@ -26,6 +26,7 @@ class RandomSearchContext(AbstractContext):
     max_iter: int = None
     step_size: int | float = None
     initial_solution: list = None
+    initial_value: list = None
     current_solution: list = None
     current_value: float = None
     best_solution: list = None
@@ -71,12 +72,6 @@ class RandomSearch(Algorithm):
 
             # Generate neighbor solution
             self.current_solution = self.generate_neighbor()
-
-            # Update the best solution so far
-            if self.objective(self.current_solution) < \
-                self.objective(self.best_solution):
-                self.best_solution = self.current_solution
-                self.best_value = self.objective(self.current_solution)
 
             # Increment iteration counter
             self.iter += 1

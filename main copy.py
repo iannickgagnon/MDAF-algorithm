@@ -22,8 +22,8 @@ if __name__ == "__main__":
 
     context = RandomSearchContext(
         max_iter = 100,
-        step_size=1,
-        initial_solution=randint(0, 10),
+        step_size=0.5,
+        initial_solution=randint(0, 1000) / 100,
         objective=objective_function,
         generate_neighbor=generate_neighbor,
         terminate=terminate
@@ -31,6 +31,8 @@ if __name__ == "__main__":
 
     # Instantiate the algorithm
     algo = RandomSearch(context)
+
+    algo.plot_first_hitting_time_distribution(nb_runs=1000)
 
     # Run the algorithm
     algo.run()
