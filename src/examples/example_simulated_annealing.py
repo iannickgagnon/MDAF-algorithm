@@ -1,7 +1,6 @@
 
 # External libraries
-from random import random, \
-                   gauss
+from random import random, gauss, randint
 from math import exp
 import numpy as np
 
@@ -12,7 +11,7 @@ from src.algorithms.subclasses.simulated_annealing import SimulatedAnnealingCont
 
 if __name__ == "__main__":
 
-    def generate_neighbor(context, step_size=1):
+    def generate_neighbor(context, step_size=1) -> float | np.ndarray:
         """
         Generates a neighbor solution by randomly moving the x-position of a point.
         """
@@ -67,7 +66,7 @@ if __name__ == "__main__":
     # Initialize context
     context = SimulatedAnnealingContext(
         temperature_schedule=list(range(1000, 0, -10)),
-        initial_solution=10,
+        initial_solution=randint(0, 1000) / 100,
         objective=objective_function,
         generate_neighbor=generate_neighbor,
         accept=accept,
@@ -75,12 +74,15 @@ if __name__ == "__main__":
         lower_temperature=lower_temperature
     )
 
-
-
-    # Instantiate the algorithm
+    # Instantiate algorithm
     algo = SimulatedAnnealing(context)
 
-    #algo.plot_profile(metric=algo.profiles.BEST)
+    # Plot the best value profile
+    algo.plot_profile(metric=algo.profiles.BEST,
+                      is_legend=True)
 
+    # Plot the best value distribution
     algo.plot_distribution(metric=algo.metrics.BEST, 
-                           foo_statistic=np.mean)
+                           foo_statistic=np.mean,
+                           sample_size=100,
+                           is_legend=True)

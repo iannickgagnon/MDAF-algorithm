@@ -2,6 +2,7 @@
 # External libraries
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
+from scipy.stats import bootstrap
 import matplotlib.pyplot as plt
 from inspect import signature
 from typing import Any
@@ -218,7 +219,9 @@ class Algorithm(ABC):
     def plot_profile(self,
                      metric: str,
                      nb_runs: int = 100,
-                     nb_bootstrap_samples: int = 1000):
+                     nb_bootstrap_samples: int = 1000,
+                     is_legend=False,
+                     is_export_data=False) -> None | np.ndarray:
         """
         Generates convergence profiles with 95% bootstrap confidence intervals using multiple runs of the algorithm.
 
@@ -259,28 +262,49 @@ class Algorithm(ABC):
         # Slice all best value histories to the minimum length
         histories = np.array([curve[:min_length] for curve in histories])
 
-        # Calculate the mean best values
-        mean_best_values = np.mean(histories, axis=0)
+        # Calculate means
+        means = np.mean(histories, axis=0)
 
         # Bootstrap resampling
-        bootstrap_means = np.zeros((nb_bootstrap_samples, mean_best_values.shape[0]))
-        for i in range(nb_bootstrap_samples):
-            sample_indices = np.random.choice(nb_runs, nb_runs, replace=True)
-            sample_means = np.mean(histories[sample_indices], axis=0)
-            bootstrap_means[i] = sample_means
+        bootstrap_results = bootstrap((histories,),
+                                    np.mean,
+                                    n_resamples=nb_bootstrap_samples,
+                                    method='percentile')
 
         # Calculate the 95% confidence intervals
-        lower_bound = np.percentile(bootstrap_means, 2.5, axis=0)
-        upper_bound = np.percentile(bootstrap_means, 97.5, axis=0)
+        lower_bound, upper_bound = bootstrap_results.confidence_interval
+        
+        '''
+        Plot results
+        '''
 
-        # Plot the results
-        plt.fill_between(range(len(mean_best_values)), lower_bound, upper_bound, color='b', alpha=0.5, label=f'95% CI (n = {nb_runs})')
-        plt.plot(mean_best_values, color='b', label='Mean')
+        # Shade the confidence interval
+        plt.fill_between(range(len(means)), 
+                         lower_bound, 
+                         upper_bound, 
+                         color='b', 
+                         alpha=0.5, 
+                         label=f'95% CI (n = {nb_runs})')
+        
+        # Plot 
+        plt.plot(means, color='b', label='Mean')
         plt.ylim([min(lower_bound) * 0.9, max(upper_bound) * 1.1])
-        plt.legend(bbox_to_anchor=(0.5, 1.25), loc='upper center', ncol=2)
+
+        # Show legend
+        if is_legend:
+            plt.legend(bbox_to_anchor=(0.5, 1.25), loc='upper center', ncol=2)
+        
+        # Add grid
         plt.grid(linestyle='--', alpha=0.5)
+        
+        # Adjust layout
         plt.tight_layout()
+        
         plt.show()
+
+        # Export data if required
+        if is_export_data:
+            return histories
 
 
     def generate_metric_distribution(self,
@@ -304,6 +328,7 @@ class Algorithm(ABC):
         # Initialize output
         metrics = []
 
+        # Collect metrics
         for _ in range(sample_size):
                 
                 # Instantiate new algorithm
@@ -346,10 +371,10 @@ class Algorithm(ABC):
         for _ in range(sample_size):
                 
             # Generate metric distribution
-            metric = self.generate_metric_distribution('best', sub_sample_size)
+            sample = self.generate_metric_distribution(metric, sub_sample_size)
     
             # Collect
-            statistics.append(foo_statistic(metric))
+            statistics.append(foo_statistic(sample))
 
         return statistics
 
@@ -427,7 +452,7 @@ class Algorithm(ABC):
         hist, bins = np.histogram(sample, bins=10, density=True)
         bin_centers = 0.5 * (bins[1:] + bins[:-1])
 
-        # Bootstrap to estimate the 95% CI error bars
+        # Bootstrap estimate of the error bars
         bootstrap_samples = np.random.choice(sample, (nb_bootstraps, sample_size), replace=True)
         bootstrap_hist = np.array([np.histogram(bs, bins=bins, density=True)[0] for bs in bootstrap_samples])
         
@@ -436,6 +461,10 @@ class Algorithm(ABC):
         upper_bound = np.percentile(bootstrap_hist, 97.5, axis=0)
         error = [hist - lower_bound, upper_bound - hist]
         
+        '''
+        Plot results
+        '''
+
         # Plot the histogram
         plt.bar(bin_centers, 
                 hist, 
@@ -446,14 +475,31 @@ class Algorithm(ABC):
                 label='Rel. Frequency')
         
         # Add error bars
-        plt.errorbar(bin_centers, hist, yerr=error, fmt='.', color='k', ecolor='black', capsize=3, label=f'95% CI (n = {sample_size})')
+        plt.errorbar(bin_centers, 
+                     hist, 
+                     yerr=error, 
+                     fmt='.', 
+                     color='k', 
+                     ecolor='black', 
+                     capsize=3, 
+                     label=f'95% CI (n = {sample_size})')
 
         plt.ylabel('Relative Frequency')
         if is_legend:
-            plt.legend(bbox_to_anchor=(0.5, 1.25), loc='upper center', ncol=2)
-        plt.grid(linestyle='--', alpha=0.5)
+            plt.legend(bbox_to_anchor=(0.5, 1.25), 
+                       loc='upper center', 
+                       ncol=2)
+
+        # Add grid
+        plt.grid(linestyle='--', 
+                 alpha=0.5)
+
+        # Bring grid to the background
         plt.gca().set_axisbelow(True)
+
+        # Adjust layout
         plt.tight_layout()
+        
         plt.show()
 
 
