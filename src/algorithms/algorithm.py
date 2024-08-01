@@ -5,8 +5,10 @@ from dataclasses import dataclass
 from scipy.stats import bootstrap
 import matplotlib.pyplot as plt
 from inspect import signature
+from warnings import warn
 from typing import Any
 import numpy as np
+
 
 # Internal libraries
 from src.algorithms.abstract_context import AbstractContext
@@ -77,7 +79,11 @@ class Algorithm(ABC):
         Args:
             context (AbstractContext): The context object for the algorithm.
         """
+        
+        # Store context
         self.context = context
+
+        # Internalize metrics and pofiles constants
         super().__setattr__('metrics', Metrics())
         super().__setattr__('profiles', Profiles())
 
@@ -130,11 +136,12 @@ class Algorithm(ABC):
             case 'current_value' | 'best_solution' | 'best_value' | 'initial_value' | 'initial_solution':
 
                 # Raise an error if trying to set the value directly
-                raise AttributeError('\033[91mInitial, current and best values are updated automatically when setting the current solution (self.current_solution).\033[0m')
+                raise AttributeError('\033[91mInitial, current and best values are updated automatically'
+                                     ' when setting the current solution (self.current_solution).\033[0m')
 
             case 'context':
 
-                # To avoid infinite recursion, set the attribute in the Algorithm object to circumvent the subclass __setattr__ method
+                # Set the attribute in the Algorithm object to avoir recursion in the subclass __setattr__ method
                 super().__setattr__(attribute_name, value)
             
             case 'current_solution':  
@@ -181,6 +188,27 @@ class Algorithm(ABC):
         Returns:
             None
         """
+
+        # Use initializer if present
+        if self.context.solution_initializer is not None:
+            self.context.solution_initializer(self.context)
+        elif self.context.initial_solution is None:
+            raise AttributeError('\033[91mPlease provide an initial solution (initial_solution: list | np.ndarray)'
+                                 ' or an initializer function (solution_initializer: callable).\033[0m')
+
+        # Determine the number of agents (e.g., particles in PSO)
+        if self.context.nb_agents is None:
+
+            # Try to infer the number of agents from the initial solution
+            if isinstance(self.context.initial_solution, (int, float, list)):
+                self.context.nb_agents = 1
+            elif isinstance(self.context.initial_solution, np.ndarray):
+                self.context.nb_agents = self.context.initial_solution.shape[0]
+            else:
+                raise TypeError('\033[91mInitial solution (initial_solution) must be a list, an int, a float, or a NumPy array.\033[0m')
+
+            # Warn user
+            print(f'\033[93mNumber of agents not provided. Automatically set to {self.context.nb_agents} based on initial solution size.\033[0m')
 
         # Initialize solutions and their values
         self.context.initial_value = self.objective(self.initial_solution)

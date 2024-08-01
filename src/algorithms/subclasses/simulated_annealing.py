@@ -30,12 +30,6 @@ class SimulatedAnnealingContext(AbstractContext):
     temperature_schedule: list = None
     temperature_index: int = 0
     current_temperature: int = None
-    initial_solution: list = None
-    current_solution: list = None
-    current_value: float = None
-    best_solution: list = None
-    best_value: float = None
-    objective: callable = None
     generate_neighbor: callable = None
     accept: callable = None
     terminate: callable = None
