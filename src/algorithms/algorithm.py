@@ -83,8 +83,8 @@ class Algorithm(ABC):
         self.context = context
 
         # Internalize metrics and pofiles constants
-        super().__setattr__('metrics', Metrics())
-        super().__setattr__('profiles', Profiles())
+        self.metrics = Metrics()
+        self.profiles = Profiles()
 
 
     def __getattr__(self, 

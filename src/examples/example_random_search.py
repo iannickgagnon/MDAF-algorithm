@@ -1,9 +1,6 @@
 
-# External libraries
-import numpy as np
 from random import gauss, randint
 
-# Internal libraries
 from src.algorithms.subclasses.random_search import RandomSearchContext, \
                                                     RandomSearch
 

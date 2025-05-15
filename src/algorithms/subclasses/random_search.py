@@ -19,7 +19,7 @@ class RandomSearchContext(AbstractContext):
         best_solution (list): The best solution found so far.
         best_value (float): The value of the best solution found so far.
         objective (callable): The objective function used to evaluate solutions.
-        generate_random_solution (callable): The function used to generate a random solution.
+        generate_neighbor (callable): The function used to generate a random solution.
         terminate (callable): The function used to determine whether to terminate the algorithm.
     """
     iter: int = 0
