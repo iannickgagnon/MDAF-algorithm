@@ -13,11 +13,11 @@ class RandomSearchContext(AbstractContext):
     Represents the context for the Random Search algorithm.
 
     Attributes:
-        initial_solution (list): The initial solution for the algorithm.
-        current_solution (list): The current solution being evaluated.
-        current_value (float): The value of the current solution.
-        best_solution (list): The best solution found so far.
-        best_value (float): The value of the best solution found so far.
+        initial_solution (list): [Abstract] The initial solution for the algorithm.
+        current_solution (list): [Abstract] The current solution being evaluated.
+        current_value (float): [Abstract] The value of the current solution.
+        best_solution (list): [Abstract] The best solution found so far.
+        best_value (float): [Abstract] The value of the best solution found so far.
         objective (callable): The objective function used to evaluate solutions.
         generate_neighbor (callable): The function used to generate a random solution.
         terminate (callable): The function used to determine whether to terminate the algorithm.

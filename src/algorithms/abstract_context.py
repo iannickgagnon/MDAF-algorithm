@@ -1,8 +1,9 @@
 
 # External libraries
 from abc import ABC
+from dataclasses import dataclass
 
-
+@dataclass
 class AbstractContext(ABC):
     """
     Represents the context for an optimization algorithm. 
