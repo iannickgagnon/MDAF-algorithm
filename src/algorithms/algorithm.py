@@ -5,7 +5,6 @@ from dataclasses import dataclass
 from scipy.stats import bootstrap
 import matplotlib.pyplot as plt
 from inspect import signature
-from warnings import warn
 from typing import Any
 import numpy as np
 
