@@ -425,6 +425,10 @@ class Algorithm(ABC):
             np.array: The sample of first hitting times.
         """
 
+        # Make sure that the user does not provide both a metric and a custom statistic function
+        if metric and foo_statistic:
+            raise AttributeError('\033[91mPlease provide either a metric or a statistic function, not both.\033[0m')
+
         # Validate
         assert metric in self.metrics.__dict__.values(), \
             f'\033[91mThe supplied metric (\'{metric}\') is not in {tuple(self.metrics.__dict__.values())}.\033[0m'
