@@ -1,4 +1,3 @@
-# External libraries
 from math import exp, pi
 from random import gauss, randint, random
 
@@ -6,7 +5,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
 
-# Internal libraries
 from src.algorithms.subclasses.simulated_annealing import (
     SimulatedAnnealing,
     SimulatedAnnealingContext,

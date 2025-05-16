@@ -1,10 +1,8 @@
-# External libraries
 from math import exp
 from random import gauss, randint, random
 
 import numpy as np
 
-# Internal libraries
 from src.algorithms.subclasses.simulated_annealing import (
     SimulatedAnnealing,
     SimulatedAnnealingContext,
