@@ -10,7 +10,7 @@ import numpy as np
 
 
 # Internal libraries
-from src.algorithms.abstract_context import AbstractContext
+from src.algorithms.abstract_context import BaseContext
 
 
 @dataclass
@@ -71,7 +71,7 @@ class Algorithm(ABC):
     """
 
     def __init__(self, 
-                 context: AbstractContext):
+                 context: BaseContext):
         """
         Initializes the Algorithm object.
 
@@ -89,7 +89,7 @@ class Algorithm(ABC):
 
     def __getattr__(self, 
                     attribute_name: str,
-                    *args) -> AbstractContext:
+                    *args) -> BaseContext:
         """
         Retrieves the attribute from the context object.
 

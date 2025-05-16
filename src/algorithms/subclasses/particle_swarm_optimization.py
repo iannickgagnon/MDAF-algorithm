@@ -4,12 +4,12 @@ import numpy as np
 import random
 
 # Internal libraries
-from src.algorithms.abstract_context import AbstractContext
+from src.algorithms.abstract_context import BaseContext
 from src.algorithms.algorithm import Algorithm
 
 
 @dataclass
-class PSOContext(AbstractContext):
+class PSOContext(BaseContext):
     """
     Represents the context for the Particle Swarm Optimization (PSO) algorithm.
 

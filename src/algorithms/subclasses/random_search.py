@@ -3,12 +3,12 @@
 from dataclasses import dataclass
 
 # Internal libraries
-from src.algorithms.abstract_context import AbstractContext
+from src.algorithms.abstract_context import BaseContext
 from src.algorithms.algorithm import Algorithm
 
 
 @dataclass
-class RandomSearchContext(AbstractContext):
+class RandomSearchContext(BaseContext):
     """
     Represents the context for the Random Search algorithm.
 

@@ -3,12 +3,12 @@
 from dataclasses import dataclass
 
 # Internal libraries
-from src.algorithms.abstract_context import AbstractContext
+from src.algorithms.abstract_context import BaseContext
 from src.algorithms.algorithm import Algorithm
 
 
 @dataclass
-class SimulatedAnnealingContext(AbstractContext):
+class SimulatedAnnealingContext(BaseContext):
     """
     Represents the context for the Simulated Annealing algorithm.
 
