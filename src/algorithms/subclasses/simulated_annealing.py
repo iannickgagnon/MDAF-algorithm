@@ -1,9 +1,6 @@
-
-# External libraries
 from dataclasses import dataclass
 
-# Internal libraries
-from src.algorithms.abstract_context import BaseContext
+from algorithms.base_context import BaseContext
 from src.algorithms.algorithm import Algorithm
 
 
@@ -27,6 +24,7 @@ class SimulatedAnnealingContext(BaseContext):
         terminate (callable): The function used to determine whether to terminate the algorithm.
         lower_temperature (callable): The function used to lower the temperature.
     """
+
     temperature_schedule: list = None
     temperature_index: int = 0
     current_temperature: int = None
@@ -51,14 +49,15 @@ class SimulatedAnnealing(Algorithm):
         current_temperature (int): The current temperature of the algorithm.
     """
 
-    def __init__(self, 
-                 context: SimulatedAnnealingContext):
+    def __init__(self, context: SimulatedAnnealingContext):
 
         # Initialize the context, solutions, and values
-        self.initialize(context) 
+        self.initialize(context)
 
         # Initialize temperature
-        self.current_temperature = self.context.temperature_schedule[self.context.temperature_index]   
+        self.current_temperature = self.context.temperature_schedule[
+            self.context.temperature_index
+        ]
 
     def run(self):
         """

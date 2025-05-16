@@ -1,9 +1,6 @@
-
-# External libraries
 from dataclasses import dataclass
 
-# Internal libraries
-from src.algorithms.abstract_context import BaseContext
+from algorithms.base_context import BaseContext
 from src.algorithms.algorithm import Algorithm
 
 
@@ -22,6 +19,7 @@ class RandomSearchContext(BaseContext):
         generate_neighbor (callable): The function used to generate a random solution.
         terminate (callable): The function used to determine whether to terminate the algorithm.
     """
+
     iter: int = 0
     max_iter: int = None
     step_size: int | float = None
@@ -50,11 +48,10 @@ class RandomSearch(Algorithm):
         best_value (float): The value of the best solution found so far.
     """
 
-    def __init__(self, 
-                 context: RandomSearchContext):
+    def __init__(self, context: RandomSearchContext):
 
         # Initialize the context, solutions, and values
-        self.initialize(context) 
+        self.initialize(context)
 
     def run(self):
         """
