@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
 
-from src.algorithms.subclasses.simulated_annealing import (
+from src.algorithms.implementations.simulated_annealing import (
     SimulatedAnnealing,
     SimulatedAnnealingContext,
 )

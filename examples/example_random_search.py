@@ -1,6 +1,9 @@
 from random import gauss, randint
 
-from src.algorithms.subclasses.random_search import RandomSearch, RandomSearchContext
+from src.algorithms.implementations.random_search import (
+    RandomSearch,
+    RandomSearchContext,
+)
 
 if __name__ == "__main__":
 
