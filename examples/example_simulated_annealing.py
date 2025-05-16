@@ -81,6 +81,4 @@ if __name__ == "__main__":
     algo.plot_profile(metric=algo.profiles.BEST, is_legend=True)
 
     # Plot the best value distribution
-    algo.plot_distribution(
-        metric=algo.metrics.BEST, foo_statistic=np.mean, sample_size=100, is_legend=True
-    )
+    algo.plot_distribution(metric=algo.metrics.BEST, sample_size=100, is_legend=True)
