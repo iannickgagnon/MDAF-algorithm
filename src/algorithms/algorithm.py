@@ -358,13 +358,13 @@ class Algorithm(ABC):
             return histories
 
     def generate_metric_distribution(
-        self, metric: str = "best", sample_size: int = 100
+        self, metric: str = Metrics.BEST, sample_size: int = 100
     ):
         """
         Generates a sample of the first hitting times or best solution values.
 
         Args:
-            metric (str): The metric to generate the sample for (e.g., 'best'). Default is 'best'.
+            metric (str): The metric to generate the sample for (e.g., 'BEST'). Default is Metrics.BEST ('BEST').
             sample_size (int): The number of samples to generate. Default is 100.
 
         Returns:
@@ -398,7 +398,7 @@ class Algorithm(ABC):
     def generate_statistic_distribution(
         self,
         foo_statistic: callable,
-        metric: str = "best",
+        metric: str = Metrics.BEST,
         sample_size: int = 100,
         sub_sample_size: int = 100,
     ):
@@ -407,7 +407,7 @@ class Algorithm(ABC):
 
         Args:
             foo_statistic (callable): A function that calculates a statistic on the metric distribution.
-            metric (str, optional): The type of metric to generate. Must be either 'best' or 'first hitting time'. Defaults to 'best'.
+            metric (str, optional): The type of metric to generate. Must be either 'BEST' or 'FIRST HITTING TIME'. Defaults to Metrics.BEST ('BEST').
             sample_size (int, optional): The number of samples to generate. Defaults to 100.
             sub_sample_size (int, optional): The size of each sub-sample used to generate the metric distribution. Defaults to 100.
 
