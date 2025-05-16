@@ -1,11 +1,11 @@
 from dataclasses import dataclass
 
-from algorithms.base_context import BaseContext
+from algorithms.context import AbstractContext
 from src.algorithms.algorithm import Algorithm
 
 
 @dataclass
-class RandomSearchContext(BaseContext):
+class RandomSearchContext(AbstractContext):
     """
     Represents the context for the Random Search algorithm.
 

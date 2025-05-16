@@ -7,28 +7,68 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.stats import bootstrap
 
-from algorithms.base_context import BaseContext
+from algorithms.context import AbstractContext
 from algorithms.utils import plot_fonts
 
 
 @dataclass
 class Metrics:
     """
-    Dataclass for storing metrics.
+    Dataclass for storing metric names used to evaluate algorithm performance.
+
+    Attributes:
+
+        BEST (str):
+
+            Refers to the best solution value found by the algorithm during its run. Used for collecting
+            and analyzing the distribution of best values across multiple runs.
+
+            Example usage:
+
+                'metric=algo.metrics.BEST' in plot_distribution or generate_metric_distribution.
+
+        FIRST_HITTING_TIME (str):
+
+            Refers to the iteration at which the best solution is first found. Used for analyzing how quickly
+            the algorithm converges to its best solution.
+
+            Example usages:
+
+                >>> algo.plot_distribution(metric=algo.metrics.FIRST_HITTING_TIME)
     """
 
-    BEST: str = "best"
-    FIRST_HITTING_TIME: str = "first hitting time"
+    BEST: str = "BEST"
+    FIRST_HITTING_TIME: str = "FIST HITTING TIME"
 
 
 @dataclass
 class Profiles:
     """
-    Dataclass for storing profiles.
+    Dataclass for storing profile names used for plotting convergence profiles.
+
+    Attributes:
+
+        BEST (str):
+
+            Refers to the profile of the best value found so far at each iteration. Used for
+            plotting the convergence of the best solution value over time.
+
+            Example usage:
+
+                >>> algo.plot_profile(metric=algo.profiles.BEST)
+
+        VALUE (str):
+
+            Refers to the profile of the current solution value at each iteration. Used for
+            plotting the progression of the current solution value over time.
+
+            Example usage:
+
+                >>> algo.plot_profile(metric=algo.profiles.VALUE)
     """
 
-    BEST: str = "best"
-    VALUE: str = "value"
+    BEST: str = "BEST"
+    VALUE: str = "VALUE"
 
 
 class Algorithm(ABC):
@@ -36,12 +76,15 @@ class Algorithm(ABC):
     Abstract base class for metaheuristic algorithms.
     """
 
-    def __init__(self, context: BaseContext):
+    def __init__(self, context: AbstractContext):
         """
         Initializes the Algorithm object.
 
         Args:
             context (AbstractContext): The context object for the algorithm.
+
+        Returns:
+            None
         """
 
         # Store context
@@ -51,7 +94,7 @@ class Algorithm(ABC):
         self.metrics = Metrics()
         self.profiles = Profiles()
 
-    def __getattr__(self, attribute_name: str, *args) -> BaseContext:
+    def __getattr__(self, attribute_name: str, *args) -> AbstractContext:
         """
         Retrieves the attribute from the context object.
 
@@ -87,6 +130,9 @@ class Algorithm(ABC):
         Args:
             attribute_name (str): The name of the attribute.
             value (Any): The value to be set.
+
+        Returns:
+            None
         """
 
         match attribute_name:
@@ -207,7 +253,7 @@ class Algorithm(ABC):
             context (AbstractContext): The context object for the algorithm.
 
         Returns:
-            None.
+            None
         """
 
         # Store the context

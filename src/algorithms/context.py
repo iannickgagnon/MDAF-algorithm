@@ -45,3 +45,17 @@ class BaseContext(ABC):
         new_instance.__dict__.update(self.__dict__)
 
         return new_instance
+
+
+@dataclass
+class AbstractContext(BaseContext):
+    """
+    Abstract base class for optimization algorithm contexts.
+
+    This class serves as a blueprint for creating specific algorithm contexts.
+    It inherits from BaseContext and can be extended to include additional
+    attributes or methods specific to different optimization algorithms.
+    """
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
