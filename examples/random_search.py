@@ -1,6 +1,6 @@
 from random import gauss, randint
 
-from src.algorithms.implementations.random_search import (
+from algorithms.implementations.random_search import (
     RandomSearch,
     RandomSearchContext,
 )

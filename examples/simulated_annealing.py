@@ -3,7 +3,7 @@ from random import gauss, randint, random
 
 import numpy as np
 
-from src.algorithms.implementations.simulated_annealing import (
+from algorithms.implementations.simulated_annealing import (
     SimulatedAnnealing,
     SimulatedAnnealingContext,
 )

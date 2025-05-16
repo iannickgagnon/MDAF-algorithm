@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 from algorithms.context import AlgorithmContext
-from src.algorithms.algorithm import Algorithm
+from algorithms.algorithm import Algorithm
 
 
 @dataclass
