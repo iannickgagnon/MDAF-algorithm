@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.stats import bootstrap
 
-from algorithms.context import AbstractContext
+from algorithms.context import AlgorithmContext
 from algorithms.utils import plot_fonts
 
 
@@ -76,7 +76,7 @@ class Algorithm(ABC):
     Abstract base class for metaheuristic algorithms.
     """
 
-    def __init__(self, context: AbstractContext):
+    def __init__(self, context: AlgorithmContext):
         """
         Initializes the Algorithm object.
 
@@ -94,7 +94,7 @@ class Algorithm(ABC):
         self.metrics = Metrics()
         self.profiles = Profiles()
 
-    def __getattr__(self, attribute_name: str, *args) -> AbstractContext:
+    def __getattr__(self, attribute_name: str, *args) -> AlgorithmContext:
         """
         Retrieves the attribute from the context object.
 

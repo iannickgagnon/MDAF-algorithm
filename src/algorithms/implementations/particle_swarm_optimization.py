@@ -2,12 +2,12 @@ from dataclasses import dataclass
 
 import numpy as np
 
-from algorithms.context import AbstractContext
+from algorithms.context import AlgorithmContext
 from src.algorithms.algorithm import Algorithm
 
 
 @dataclass
-class PSOContext(AbstractContext):
+class PSOContext(AlgorithmContext):
     """
     Represents the context for the Particle Swarm Optimization (PSO) algorithm.
 

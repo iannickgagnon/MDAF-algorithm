@@ -1,11 +1,11 @@
 from dataclasses import dataclass
 
-from algorithms.context import AbstractContext
+from algorithms.context import AlgorithmContext
 from src.algorithms.algorithm import Algorithm
 
 
 @dataclass
-class SimulatedAnnealingContext(AbstractContext):
+class SimulatedAnnealingContext(AlgorithmContext):
     """
     Represents the context for the Simulated Annealing algorithm.
 

@@ -48,7 +48,7 @@ class BaseContext(ABC):
 
 
 @dataclass
-class AbstractContext(BaseContext):
+class AlgorithmContext(BaseContext):
     """
     Abstract base class for optimization algorithm contexts.
 
